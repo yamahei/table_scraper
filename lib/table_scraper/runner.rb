@@ -8,8 +8,18 @@ class Runner
         @browser = option[:browser] || :chrome
         @convert = option[:convert] || :none
         @hashead = option[:hashead] || true
-        @operation = option[:operation] || nil
         @translate = option[:translate] || nil
+        _option = option[:operation]
+        if _option then
+            if _option.class == String then
+                @operation = _option.split(";;")
+            elsif _option.class == Array then
+                @operation = _option
+            else
+                p _option
+                raise StandardError.new "unknown option."
+            end
+        end
         
         #TODO: headless?
         @url = url
